@@ -29,6 +29,21 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 
+/*
+
+$body = @{
+    systemMessage = "You are a helpful study assistant that will help students"
+    query = "text for the notes we submit"
+}
+
+$jsonBody = $body | ConvertTo-Json
+
+$response = Invoke-RestMethod -Uri http://localhost:3001/gpt/query -Method Post -ContentType "application/json" -Body $jsonBody
+
+$response
+
+*/
+
 app.use('/gpt', gptRouter);
 /*
 
@@ -39,7 +54,7 @@ $body = @{
 
 $jsonBody = $body | ConvertTo-Json
 
-$response = Invoke-RestMethod -Uri http://localhost:3001/test/query -Method Post -ContentType "application/json" -Body $jsonBody
+$response = Invoke-RestMethod -Uri http://localhost:3001/test/queryPost -Method Post -ContentType "application/json" -Body $jsonBody
 
 $response
 
