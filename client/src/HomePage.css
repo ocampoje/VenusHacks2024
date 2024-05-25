@@ -1,0 +1,38 @@
+h1{
+    text-align: center;
+    font-family: "Righteous", 'Times New Roman', Times, serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    background-image: linear-gradient(180deg, #070F2B, #183391);
+    color: #ba55d3;
+    padding: 20px;
+  }
+
+  ul {
+    color: #ba55d3;
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .compare-notes-button {
+    font-size: 18px; /* Adjust the font size as needed */
+    padding: 17px 50px; /* Adjust the padding to make the button more elongated */
+    border: none; /* Remove default button border */
+    border-radius: 25px; /* Apply border radius to make it rounded */
+    background-color: rgba(145, 111, 177, 0.5); /* Light purple with transparency */
+    color: white; /* Text color */
+  }
+  
+  .submit-button-container {
+    align-self: flex-end;
+    margin-right: 20px;
+  }
+  
