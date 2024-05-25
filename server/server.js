@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,6 +7,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var gptRouter = require('./routes/gpt');
+var testRouter = require('./routes/test');
 
 var app = express();
 
@@ -19,8 +22,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// curl http://localhost:3001/
 app.use('/', indexRouter);
+// curl http://localhost:3001/users
 app.use('/users', usersRouter);
+
+
+app.use('/gpt', gptRouter);
+/*
+
+$body = @{
+    systemMessage = "this is a test for a system message"
+    query = "Can you help me with this sample query test test?"
+}
+
+$jsonBody = $body | ConvertTo-Json
+
+$response = Invoke-RestMethod -Uri http://localhost:3001/test/query -Method Post -ContentType "application/json" -Body $jsonBody
+
+$response
+
+*/
+app.use('/test',testRouter);
+//curl http://localhost:3001/test/queryGET
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -32,7 +57,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  res.locals.title = 'Error';
   // render the error page
   res.status(err.status || 500);
   res.render('error');
