@@ -124,7 +124,7 @@ app.post("/addNote", async (req, res) => {
   }
 
   // Check if lecture exists
-  const Lecture = await LectureModel.findById
+  const Lecture = await LectureModel.findById;
   if (!Lecture) {
     return res.status(400).json({ message: "Lecture not found." });
   }
@@ -138,12 +138,66 @@ app.post("/addNote", async (req, res) => {
 
   try {
     await newNote.save();
-    res
-      .status(201)
-      .json({ message: "Note added successfully", note: newNote });
+    res.status(201).json({ message: "Note added successfully", note: newNote });
   } catch (error) {
     console.error("Error adding note:", error);
     res.status(500).json({ message: "Failed to add note due to server error" });
+  }
+});
+
+//curl -X DELETE "http://localhost:3001/deleteNoteByName/{note name}" spaces are %20
+
+app.delete("/deleteNoteByName/:name", async (req, res) => {
+  const name = req.params.name; // Correct extraction of name from params
+  NoteModel.deleteOne({ name: name })
+    .then((result) => {
+      if (result.deletedCount > 0) {
+        res.status(200).send(`Note with name '${name}' deleted successfully.`);
+      } else {
+        res.status(404).send("Note not found.");
+      }
+    })
+    .catch((err) => {
+      console.error("Error during deletion:", err);
+      res.status(500).json(err);
+    });
+});
+
+//curl -X DELETE "http://localhost:3001/deleteLectureByName/{lecture name}" spaces are %20
+
+app.delete("/deleteLectureByName/:name", async (req, res) => {
+  const name = req.params.name;
+  LectureModel.deleteOne({ name }).then((result) => {
+    if (result.deletedCount > 0) {
+      res.status(200).send(`Lecture with name '${name}' deleted successfully.`);
+    } else {
+      res.status(404).send("Lecture not found.");
+    }
+  });
+});
+
+// edit a note by providing note by _id
+// curl -X PUT "http://localhost:3001/note/{noteId}" -H "Content-Type: application/json" -d "{\"noteName\":\"new name\",\"noteContent\":\"new content\",\"noteFeedback\":\"new feedback\"}"
+app.put("/note/:noteId", async (req, res) => {
+  const { noteId } = req.params;
+
+  try {
+    const note = await NoteModel.findById(noteId);
+    if (!note) {
+      return res.status(404).send("Note not found");
+    }
+    if (req.body.noteName)
+      note.name = req.body.noteName;
+    if (req.body.noteContent)
+      note.content = req.body.noteContent;
+    if (req.body.noteFeedback)
+      note.feedback = req.body.noteFeedback;
+
+    await note.save();
+    res.send(note);
+  } catch (error) {
+    console.error("Failed to update note:", error);
+    res.status(500).send("Internal server error");
   }
 });
 
