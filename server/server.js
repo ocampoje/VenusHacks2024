@@ -83,10 +83,10 @@ app.get("/notes", async (req, res) => {
       NoteName: note.name,
       NoteContent: note.content,
       NoteFeedback: note.feedback,
-      LectureId: note.lecture_id,
-      Lecture: note.lecture_id
-        ? { name: note.lecture_id.name, transcript: note.lecture_id.transcript }
-        : { name: "N/A", transcript: "N/A" },
+      LectureId: note.lecture_id
+      // Lecture: note.lecture_id
+      //   ? { name: note.lecture_id.name, transcript: note.lecture_id.transcript }
+      //   : { name: "N/A", transcript: "N/A" },
     }));
     res.json(formattedNotes);
   } catch (error) {
