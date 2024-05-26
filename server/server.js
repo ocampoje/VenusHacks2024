@@ -47,6 +47,7 @@ app.get("/lectures", async (req, res) => {
   try {
     const lectures = await LectureModel.find();
     const formattedLectures = lectures.map((lecture) => ({
+      LectureId: lecture._id,
       LectureName: lecture.name,
       LectureTranscript: lecture.transcript,
     }));

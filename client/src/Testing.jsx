@@ -20,6 +20,35 @@ function Testing() {
   const [Lecture_Name, setLectureName] = useState("");
   const [Lecture_Content, setLectureContent] = useState("");
 
+  const [transcript, setTranscript] = useState("");
+  const [notes, setNotes] = useState("");
+
+  const [response, setResponse] = useState("");
+
+  const cleanResponse = (response) => {
+    // Remove triple quotes and escape characters
+    let clean = response.replace(/\\\"\\\"\\\"|\\n/g, "\n").trim();
+    // Further replace operations can be added here if needed
+    return clean;
+  };
+
+  const handleGPT = async (e) => {
+    e.preventDefault();
+    try {
+      // Make POST request to login endpoint
+      const response = await axios.post("http://localhost:3001/gpt/query", {
+        transcript: transcript,
+        notes: notes,
+      });
+      console.log(response.data);
+      setResponse(cleanResponse(JSON.stringify(response.data, null, 2)));
+      // Handle success, e.g., redirect to dashboard
+    } catch (error) {
+      // Handle error, e.g., display error message
+      console.error(error);
+      setResponse("Error: " + error);
+    }
+  };
   const handleAddNote = async (e) => {
     e.preventDefault();
     try {
@@ -58,12 +87,14 @@ function Testing() {
     e.preventDefault();
     try {
       // Make put request to update not
-      const response = await axios.put(`http://localhost:3001/note/${Note_ID}`, 
-      {
-        noteName: Note_Name,
-        noteFeedback: Note_Feedback,
-        noteContent: Note_Content,
-      });
+      const response = await axios.put(
+        `http://localhost:3001/note/${Note_ID}`,
+        {
+          noteName: Note_Name,
+          noteFeedback: Note_Feedback,
+          noteContent: Note_Content,
+        }
+      );
       console.log(response.data);
       // Handle success, e.g., redirect to dashboard
     } catch (error) {
@@ -137,6 +168,33 @@ function Testing() {
           onChange={(e) => setNoteFeedback(e.target.value)}
         />
         <button onClick={handleUpdateNote}>Update Note</button>
+      </div>
+
+      <div>
+        <h1>Testing Model</h1>
+        <input
+          value={transcript}
+          placeholder="Transcript"
+          onChange={(e) => setTranscript(e.target.value)}
+        />
+        <input
+          value={notes}
+          placeholder="Notes"
+          onChange={(e) => setNotes(e.target.value)}
+        />
+        <button onClick={handleGPT}>Test</button>
+      </div>
+      <div>
+        {/* Other component elements */}
+
+        <form onSubmit={handleGPT}>{/* Form inputs and submit button */}</form>
+
+        <textarea
+          value={response}
+          readOnly
+          style={{ width: "100%", height: "300px", marginTop: "20px" }}
+          placeholder="Response will be shown here"
+        />
       </div>
     </div>
   );
