@@ -217,6 +217,22 @@ app.put("/note/:noteId", async (req, res) => {
   }
 });
 
+
+// curl http://localhost:3001/note/{noteId}
+app.get("/note/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const note = await NoteModel.findById(id);
+    if (!note) {
+      return res.status(404).send("Note not found");
+    }
+    res.send(note);
+  } catch (error) {
+    console.error("Failed to get note:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
 //#endregion
 
 //#region  endpoints
