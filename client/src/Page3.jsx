@@ -6,14 +6,18 @@ import axios from "axios";
 function Page3() {
   const location = useLocation();
   const { noteID } = location.state;
+  const { lectureID } = location.state;
   const [noteFeedbacks, setNoteFeedbacks] = useState([]);
   const [noteName, setNoteName] = useState("");
   const [noteContent, setNoteContent] = useState("");
+  const [transcriptVisible, setTranscriptVisible] = useState(false);
+  const [transcript, setTranscript] = useState("");
 
   useEffect(() => {
     console.log("id from prev page");
     console.log(noteID);
-
+    console.log(lectureID);
+    setTranscript(lectureID.transcript);
     const fetchNote = async () => {
       try {
         const response = await axios.get(
@@ -23,13 +27,19 @@ function Page3() {
         setNoteName(response.data.name);
         setNoteFeedbacks(response.data.feedback);
         setNoteContent(response.data.content);
+
+        
       } catch (error) {
         console.error("Error fetching note:", error);
       }
     };
 
     fetchNote();
-  }, [noteID]);
+  }, [noteID, lectureID]);
+
+  const toggleTranscriptVisibility = () => {
+    setTranscriptVisible(!transcriptVisible);
+  };
 
   return (
     <div className="page3-container">
@@ -53,6 +63,21 @@ function Page3() {
           ))}
         </ul>
       </div>
+      <button
+        onClick={toggleTranscriptVisibility}
+        className="transcript-button"
+      >
+        {transcriptVisible ? "Hide Transcript" : `View ${lectureID.name} Transcript`}
+      </button>
+      {transcriptVisible && (
+        <div className="transcript-box">
+          <textarea
+            className="transcript-textarea"
+            readOnly
+            value={transcript}
+          />
+        </div>
+      )}
     </div>
   );
 }

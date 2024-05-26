@@ -7,7 +7,7 @@ function NoteButton({ note }) {
 
   const handleNoteClick = () => {
     console.log(note._id)
-    navigate(`/page3/${note.name}`, { state: { noteID: note._id } });
+    navigate(`/page3/${note.name}`, { state: { noteID: note._id , lectureID : note.lecture_id} });
   };
 
   return (
@@ -36,6 +36,7 @@ export default function Page2() {
       const noteData = data.map((note) => ({
         _id: note.NoteId,
         name: note.NoteName,
+        lecture_id: note.LectureId,
       }));
       setNotes(noteData);
     } catch (error) {
