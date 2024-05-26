@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./HomePage.css";
 import axios from "axios";
 import Page2 from './Page2';
+import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function textBox() {
@@ -14,9 +15,11 @@ function textBox() {
 }
 
 function AllNotesButton() {
+  const navigate = useNavigate();
+
   const handleAllNotesClick = () => {
     console.log("button has been pressed");
-    <Route path="/Page2" element={<Page2 />} />
+    navigate(`/page2/`);
 
   };
 
@@ -107,6 +110,7 @@ export default function HomePage() {
           });
           console.log("this is the response from the model");
           console.table(response.data);
+          alert("Your notes have been saved! View them by pressing View All ReCaps.");
 
         } catch (error) {
           console.error("Failed to generate response:", error);
@@ -147,14 +151,16 @@ export default function HomePage() {
             ))}
           </select>
         </div>
-        <ul style={{ color: "#ba55d3", listStyleType: "none", padding: 0 }}>
-          <li className="note-title">
-            Note Title
+        <li className="note-title">
+            Give Your Notes A Title:
             <input
               value={Note_Name}
+              placeholder="Insert Title"
               onChange={(e) => setNoteName(e.target.value)}
             ></input>
           </li>
+        
+          
           <li>
             <p className="notes-input"></p>
             <textarea
@@ -165,7 +171,6 @@ export default function HomePage() {
               onChange={(e) => setNoteContent(e.target.value)}
             ></textarea>
           </li>
-        </ul>
         <div className="buttons-container">
           <AllNotesButton />
           <SubmitButton />

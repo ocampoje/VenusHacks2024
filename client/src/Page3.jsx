@@ -27,11 +27,9 @@ function Page3() {
   return (
     <div className="page3-container">
       <h1 className="page3-title">Lecture Notes</h1>
-      <a1 className=""> Notes go here  In a box</a1>
-
+      <div className="notes-box">
+      </div>
       <div>
-        <h2>Note Feedbacks</h2>
-        <p> The feedback would be iterated through here</p>
         <ul className="note-feedbacks">
           {noteFeedbacks.map((feedback, index) => (
             <li key={index}>

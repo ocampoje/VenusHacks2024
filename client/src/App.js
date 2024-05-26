@@ -8,8 +8,12 @@ import Page2 from './Page2';
 import Testing from './Testing'
 import Page3 from './Page3';
 
+document.title="ReCap";
+
 function App() {
   return (
+    
+    
     <Router>
       <NavBar />
       <Routes>

@@ -31,8 +31,10 @@
 
   ul {
     color: #ba55d3;
-    list-style-type: none;
-    padding: 0;
+  }
+
+  li{
+    display: inline;
   }
 
   #dynamic-input {
