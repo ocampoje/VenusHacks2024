@@ -58,6 +58,20 @@ app.get("/lectures", async (req, res) => {
   }
 });
 
+app.get("/lectures2", async (req, res) => {
+  try {
+    const lectures = await LectureModel.find();
+    const formattedLectures = lectures.map((lecture) => ({
+      LectureId: lecture._id,
+      LectureName: lecture.name
+    }));
+    res.json(formattedLectures);
+  } catch (error) {
+    console.error("Error fetching lectures:", error);
+    res.status(500).send("Failed to fetch lectures");
+  }
+});
+
 // curl http://localhost:3001/notes
 app.get("/notes", async (req, res) => {
   try {
