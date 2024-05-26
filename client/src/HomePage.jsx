@@ -76,7 +76,7 @@ export default function HomePage() {
         noteName: Note_Name,
         noteContent: Note_Content,
         noteFeedback: [],
-        lectureId: "66524dbcc0ab0d354c539792",
+        lectureId: LecID,
       });
       console.log(response.data);
       // Handle success, e.g., redirect to dashboard
