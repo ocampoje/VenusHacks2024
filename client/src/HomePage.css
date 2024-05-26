@@ -1,16 +1,23 @@
-h1{
-    text-align: center;
-    font-family: "Righteous", 'Times New Roman', Times, serif;
-    font-weight: 1000;
-    font-style: "normal";
+.title-container {
+  margin-bottom: 1px; /* Adjust the margin-bottom as needed */
+}
+
+.righteous-regular {
+  text-align: center;
+  font-family: "Righteous", 'Times New Roman', Times, serif;
+  font-weight: 1000;
+  font-size: 50px;
+  font-style: "normal";
 }
 
 .subheading {
-    text-align: center; /* Align the subheading in the center */
-    font-size: 20px; /* Adjust the font size as needed */
-    margin-top: 5px; /* Add some space between the title and the subheading */
-    color: white;
-  }
+  text-align: center; /* Align the subheading in the center */
+  font-size: 20px; /* Adjust the font size as needed */
+  color: white;
+}
+.notes-input {
+  margin-top: -10px; /* Adjust the negative margin to raise the line */
+}
 
 .homepage-container {
     display: flex;
@@ -28,12 +35,18 @@ h1{
     padding: 0;
   }
 
-  
+  #dynamic-input {
+    width: 100%; 
+    margin: 0;
+    box-sizing: border-box;
+    resize: none;
+  }
+
 .buttons-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px; /* Adjust margin as needed */
+    margin-top: 20px;
   }
 
   .compare-notes-button {
@@ -66,3 +79,28 @@ h1{
     align-self: flex-end;
     margin-right: 20px;
   }
+
+  .select-lecture-container {
+    display: flex; /* Use flexbox */
+    align-items: center; /* Vertically center items */
+    margin-top: 20px;
+  }
+  
+  .select-lecture-label {
+    margin-right: 10px; /* Adjust margin as needed */
+  }
+  
+  .select-lecture-dropdown {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: rgba(146, 144, 195, 0.6);
+    color: #070F2B;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  
+  .select-lecture-dropdown:hover {
+    background-color: #0056b3;
+  }
+  
