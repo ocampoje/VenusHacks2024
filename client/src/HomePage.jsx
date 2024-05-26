@@ -66,22 +66,51 @@ export default function HomePage() {
   const [Note_Feedback, setNoteFeedback] = useState("");
   const [Lecture_ID, setLectureID] = useState("");
   const [Note_ID, setNoteID] = useState("");
+  const [Lecture_Content, setLectureContent] = useState("");
 
   const handleAddNote = async (e) => {
     const LecID = Lecture_ID.toString();
+    console.log(LecID);
+
     e.preventDefault();
     try {
       // Make POST request to login endpoint
       const response = await axios.post("http://localhost:3001/addNote", {
-        _id: Note_Name,
+        noteName: Note_Name,
         noteContent: Note_Content,
         noteFeedback: [],
         lectureId: LecID,
       });
       if (response.data && response.data.noteId) {
-        setNoteID(response.data.noteId); 
+        setNoteID(response.data.noteId);
+        
+        try {
+          const response = await axios.get(
+            `http://localhost:3001/lecture/${LecID}`
+          );
+          setLectureContent(response.data);
+        } catch (error) {
+          console.error("Failed to get lecture:", error);
+          return (error);
+        }
+
+        try {
+          const response = await axios.post("http://localhost:3001/gpt/query", {
+            transcript: Lecture_Content,
+            notes: Note_Content,
+          });
+          console.log("this is the response from the model");
+          console.table(response.data);
+
+        } catch (error) {
+          console.error("Failed to generate response:", error);
+          return (error);
+        }
+        // Handle success, e.g., redirect to dashboard
+      } else {
+        // Handle error, e.g., display error message
+        console.error("Failed to add note:", response.data);
       }
-      // Handle success, e.g., redirect to dashboard
     } catch (error) {
       // Handle error, e.g., display error message
       console.error(error);

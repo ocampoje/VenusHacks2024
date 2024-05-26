@@ -233,6 +233,21 @@ app.get("/note/:id", async (req, res) => {
   }
 });
 
+// curl http://localhost:3001/lecture/{lectureId}
+app.get("/lecture/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const lecture = await LectureModel.findById(id);
+    if (!lecture) {
+      return res.status(404).send("Lecture not found");
+    }
+    res.send(lecture.transcript);
+  } catch (error) {
+    console.error("Failed to get lecture:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
 //#endregion
 
 //#region  endpoints
