@@ -27,8 +27,6 @@ function Page3() {
         setNoteName(response.data.name);
         setNoteFeedbacks(response.data.feedback);
         setNoteContent(response.data.content);
-
-        
       } catch (error) {
         console.error("Error fetching note:", error);
       }
@@ -48,7 +46,7 @@ function Page3() {
       </h1>
       <div className="notes-box">
         {noteContent && (
-          <div>
+          <div className="scroll-container">
             <p>{noteContent}</p>
           </div>
         )}
@@ -56,18 +54,22 @@ function Page3() {
       <div>
         <p className="recap-text">Here's a Recap of what you missed: </p>
         <ul className="note-feedbacks">
-          {noteFeedbacks.map((feedback, index) => (
-            <li key={index}>
-              <p>{feedback}</p>
-            </li>
-          ))}
+          <div className="scroll-container">
+            {noteFeedbacks.map((feedback, index) => (
+              <li key={index}>
+                <p>{feedback}</p>
+              </li>
+            ))}
+          </div>
         </ul>
       </div>
       <button
         onClick={toggleTranscriptVisibility}
         className="transcript-button"
       >
-        {transcriptVisible ? "Hide Transcript" : `View ${lectureID.name} Transcript`}
+        {transcriptVisible
+          ? "Hide Transcript"
+          : `View ${lectureID.name} Transcript`}
       </button>
       {transcriptVisible && (
         <div className="transcript-box">
