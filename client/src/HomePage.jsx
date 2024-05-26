@@ -61,6 +61,7 @@ export default function HomePage() {
 
   function SubmitButton() {
     const SubmitQuery = () => {};
+
     return (
       <div className="submit-button-container">
         <button onClick={handleAddNote} className="compare-notes-button">
@@ -90,6 +91,8 @@ export default function HomePage() {
         noteFeedback: [],
         lectureId: LecID,
       });
+
+
       if (response.data && response.data.noteId) {
         setNoteID(response.data.noteId);
         
@@ -110,10 +113,13 @@ export default function HomePage() {
           });
           console.log("this is the response from the model");
           console.table(response.data);
-          alert("Your notes have been saved! View them by pressing View All ReCaps.");
+          alert("Your notes have been saved! View what you missed in All ReCaps.");
+          
+
 
         } catch (error) {
           console.error("Failed to generate response:", error);
+          alert("Try Again! Make sure all fields are complete.")
           return (error);
         }
         // Handle success, e.g., redirect to dashboard
@@ -152,7 +158,8 @@ export default function HomePage() {
           </select>
         </div>
         <li className="note-title">
-            Give Your Notes A Title:
+
+            <label>Give Your Notes A Title: </label>
             <input
               value={Note_Name}
               placeholder="Insert Title"

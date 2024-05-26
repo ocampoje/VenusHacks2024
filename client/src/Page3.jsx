@@ -5,6 +5,25 @@ import './Page3.css'; // Import the CSS file
 function Page3() {
   const { id } = useParams(); // Get the lecture ID from the URL
   const [noteFeedbacks, setNoteFeedbacks] = useState([]);
+  const [lectureName, setLectureName] = useState("");
+
+  // Fetch lecture name based on the lecture ID
+  useEffect(() => {
+    const fetchLectureName = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/lectures/${id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch lecture details');
+        }
+        const data = await response.json();
+        setLectureName(data.name); // Store fetched lecture name
+      } catch (error) {
+        console.error('Error fetching lecture name:', error);
+      }
+    };
+
+    fetchLectureName();
+  }, [id]);
 
   // Fetch note feedbacks based on the lecture ID
   useEffect(() => {
@@ -26,10 +45,11 @@ function Page3() {
 
   return (
     <div className="page3-container">
-      <h1 className="page3-title">Lecture Notes</h1>
+      <h1 className="page3-title">{lectureName} Lecture Notes</h1>
       <div className="notes-box">
       </div>
       <div>
+        <p className="recap-text">Here's a Recap of what you missed: </p>
         <ul className="note-feedbacks">
           {noteFeedbacks.map((feedback, index) => (
             <li key={index}>

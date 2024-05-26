@@ -10,6 +10,11 @@
   font-size: 20px;
   color: white;
 }
+.recap-text {
+  text-align: left;
+  font-size: 25px; /* Adjust the font size as needed */
+  color: rgb(197, 159, 224); /* Set the text color to white */
+}
 
 .notes-input {
   margin-top: -10px;
@@ -43,8 +48,8 @@
 .notes-box {
   border-radius: 25px;
   background-color: rgba(146, 144, 195, 0.6);
-  padding: 200px 500px;
-  margin-bottom: 10px;
+  padding: 150px 500px;
+  margin-bottom: 1px;
 }
 
 .note-feedbacks {
@@ -52,7 +57,7 @@
   border-radius: 25px;
   background-color: rgba(146, 144, 195, 0.6);
   padding: 50px 500px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 

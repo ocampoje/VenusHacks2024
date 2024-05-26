@@ -2,10 +2,18 @@
   margin-bottom: 1px; /* Adjust the margin-bottom as needed */
 }
 
+.note-title{
+  padding: 10 px;
+}
+
+label{
+  padding: 10 px;
+  margin: 10 px;
+}
 .righteous-regular {
   text-align: center;
   font-family: "Righteous", 'Times New Roman', Times, serif;
-  font-weight: 1000;
+  font-weight: 2000;
   font-size: 50px;
   font-style: "normal";
 }
