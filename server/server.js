@@ -63,7 +63,7 @@ app.get("/lectures2", async (req, res) => {
     const lectures = await LectureModel.find();
     const formattedLectures = lectures.map((lecture) => ({
       LectureId: lecture._id,
-      LectureName: lecture.name
+      LectureName: lecture.name,
     }));
     res.json(formattedLectures);
   } catch (error) {
@@ -127,7 +127,6 @@ app.post("/addLecture", async (req, res) => {
 
 app.post("/addNote", async (req, res) => {
   const { noteName, noteContent, noteFeedback, lectureId } = req.body;
-
   // Check if note with name already exists
   const existingNote = await NoteModel.findOne({
     name: noteName,
@@ -201,12 +200,9 @@ app.put("/note/:noteId", async (req, res) => {
     if (!note) {
       return res.status(404).send("Note not found");
     }
-    if (req.body.noteName)
-      note.name = req.body.noteName;
-    if (req.body.noteContent)
-      note.content = req.body.noteContent;
-    if (req.body.noteFeedback)
-      note.feedback = req.body.noteFeedback;
+    if (req.body.noteName) note.name = req.body.noteName;
+    if (req.body.noteContent) note.content = req.body.noteContent;
+    if (req.body.noteFeedback) note.feedback = req.body.noteFeedback;
 
     await note.save();
     res.send(note);

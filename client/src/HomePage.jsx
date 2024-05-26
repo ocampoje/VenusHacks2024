@@ -11,17 +11,6 @@ function textBox() {
   );
 }
 
-function SubmitButton() {
-  const SubmitQuery = () => {};
-  return (
-    <div className="submit-button-container">
-      <button onClick={SubmitQuery} className="compare-notes-button">
-        Submit ReCap
-      </button>
-    </div>
-  );
-}
-
 function AllNotesButton() {
   const handleAllNotesClick = () => {};
 
@@ -29,33 +18,6 @@ function AllNotesButton() {
     <div className="all-notes-button-container">
       <button onClick={handleAllNotesClick} className="all-notes-button">
         View All ReCaps
-      </button>
-    </div>
-  );
-}
-
-// function SelectClassButton() {
-//   const SelectClass = () => {};
-
-//   return (
-//     <div className="select-class-container">
-//       <button onClick={SelectClass} className="select-class-button">
-//         Select a class:
-//       </button>
-//     </div>
-//   );
-// }
-
-function SelectLectureButton() {
-  useEffect(() => {
-    // getLectures();
-  }, []);
-  const SelectLecture = () => {};
-
-  return (
-    <div className="select-lecture-container">
-      <button onClick={SelectLecture} className="select-lecture-button">
-        Select a Lecture:
       </button>
     </div>
   );
@@ -88,7 +50,6 @@ export default function HomePage() {
     getLectures();
   }, []);
 
-
   function SubmitButton() {
     const SubmitQuery = () => {};
     return (
@@ -107,6 +68,7 @@ export default function HomePage() {
   const [Note_ID, setNoteID] = useState("");
 
   const handleAddNote = async (e) => {
+    const LecID = Lecture_ID.toString();
     e.preventDefault();
     try {
       // Make POST request to login endpoint
@@ -114,7 +76,7 @@ export default function HomePage() {
         noteName: Note_Name,
         noteContent: Note_Content,
         noteFeedback: [],
-        lectureId: Lecture_ID,
+        lectureId: "66524dbcc0ab0d354c539792",
       });
       console.log(response.data);
       // Handle success, e.g., redirect to dashboard
@@ -125,20 +87,12 @@ export default function HomePage() {
   };
 
   {
-    const [Note_Name, setNoteName] = useState("");
-    const [Note_Content, setNoteContent] = useState("");
-    const [selectedLecture, setSelectedLecture] = useState("");
-
     const handleNoteNameChange = (e) => {
       setNoteName(e.target.value);
     };
 
     const handleNoteContentChange = (e) => {
       setNoteContent(e.target.value);
-    };
-
-    const handleLectureChange = (e) => {
-      setSelectedLecture(e.target.value);
     };
 
     return (
@@ -154,8 +108,7 @@ export default function HomePage() {
           <select
             id="lectureDropdown"
             className="select-lecture-dropdown"
-            value={selectedLecture}
-            onChange={handleLectureChange}
+            onChange={(e) => setLectureID(e.target.value)}
           >
             <option value="">-- Select a lecture --</option>
             {lectures.map((lecture) => (
@@ -168,7 +121,10 @@ export default function HomePage() {
         <ul style={{ color: "#ba55d3", listStyleType: "none", padding: 0 }}>
           <li className="note-title">
             Note Title
-            <input value={Note_Name} onChange={handleNoteNameChange}></input>
+            <input
+              value={Note_Name}
+              onChange={(e) => setNoteName(e.target.value)}
+            ></input>
           </li>
           <li>
             <p className="notes-input"></p>
@@ -177,7 +133,7 @@ export default function HomePage() {
               value={Note_Content}
               id="dynamic-input"
               placeholder="Insert Notes"
-              onChange={handleNoteContentChange}
+              onChange={(e) => setNoteContent(e.target.value)}
             ></textarea>
           </li>
         </ul>
