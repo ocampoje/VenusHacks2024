@@ -74,7 +74,26 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 export default function HomePage() {
-  const lectureResults = axios.get()
+  const lectureResults = getLectures();
+  async function getLectures() {
+    try {
+      const lectureResults = await axios.get("http://localhost:3001/lectures");
+      console.log(lectureResults.data);
+      populateDropdown(lectureResults.data)
+      
+    } catch (error) {
+      console.error(error);
+    }};
+  
+    function populateDropdown(lectures) {
+      const dropdown = document.getElementById('lectureDropdown');
+      lectures.forEach(lecture => {
+        const option = document.createElement('option');
+        option.value = lecture.id; // Assuming each lecture has an 'id' you want as the value
+        option.text = lecture.title; // And a 'title' to display in the dropdown
+        dropdown.add(option);
+      });
+    }
 
   function SubmitButton(){
     const SubmitQuery = () => {
@@ -94,6 +113,7 @@ export default function HomePage() {
   const [Note_Feedback, setNoteFeedback] = useState("");
   const [Lecture_ID, setLectureID] = useState("");
   const [Note_ID, setNoteID] = useState("");
+  const [lectures, setLectures] = useState([]);
 
   const [Lecture_Name, setLectureName] = useState("");
   const [Lecture_Content, setLectureContent] = useState("");
@@ -109,6 +129,7 @@ export default function HomePage() {
         lectureId: Lecture_ID,
       });
       console.log(response.data);
+      setLectures(response.data);
       // Handle success, e.g., redirect to dashboard
     } catch (error) {
       // Handle error, e.g., display error message
@@ -164,6 +185,9 @@ export default function HomePage() {
     const handleLectureChange = (e) => {
       setSelectedLecture(e.target.value);
     };
+
+  document.addEventListener('DOMContentLoaded', getLectures);
+
   return (
     <div className="homepage-container">
       <div className="title-container">
@@ -172,9 +196,8 @@ export default function HomePage() {
       </div>
       <div className="select-lecture-container">
         <label htmlFor="lectureSelect" className="select-lecture-label">Select a Lecture:</label>
-        <select id="lectureSelect" className="select-lecture-dropdown" value={selectedLecture} onChange={handleLectureChange}>
+        <select id="lectureDropdown" className="select-lecture-dropdown" value={selectedLecture} onChange={handleLectureChange}>
           <option value="">-- Select a lecture --</option>
-          
           <option value="Lecture 1">Lecture 1</option>
           <option value="Lecture 2">Lecture 2</option>
           <option value="Lecture 3">Lecture 3</option>

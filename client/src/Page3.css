@@ -1,0 +1,26 @@
+  .righteous-regular {
+    text-align: left;
+    font-family: "Righteous", 'Times New Roman', Times, serif;
+    font-weight: 100;
+    font-size: 40px;
+    font-style: "normal";
+  }
+  
+
+  .page3-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+      background-image: linear-gradient(180deg, #070F2B, #183391);
+      color: #ba55d3;
+      padding: 20px;
+    }
+  
+    ul {
+      color: #ba55d3;
+      list-style-type: none;
+      padding: 0;
+    }
+  
+
