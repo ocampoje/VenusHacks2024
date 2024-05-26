@@ -78,7 +78,7 @@
   max-height: 200px; /* Set a maximum height for the feedback list */
   overflow-y: auto; /* Enable vertical scrolling */
   display: flex; /* Use flexbox layout */
-  flex-direction: column; /* Stack items vertically */
+  flex-direction: row; /* Stack items vertically */
   align-items: flex-start; /* Align items to the left */
 }
 

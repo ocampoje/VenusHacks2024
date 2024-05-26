@@ -38,7 +38,7 @@ router.post("/query", async function (req, res, next) {
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o", // gpt-3.5-turbo gpt-4o
       messages: [
         { role: "system", content: systemMessage }, // sys msg gives instructions on how the model behaves
         { role: "user", content: userQuery }, // like typing into the gui of chatgpt
