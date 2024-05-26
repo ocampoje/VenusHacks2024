@@ -223,6 +223,12 @@ $response = Invoke-RestMethod -Uri http://localhost:3001/gpt/query -Method Post 
 
 $response
 
+
+curl -X POST http://localhost:3001/gpt/query \
+-H "Content-Type: application/json" \
+-d '{"systemMessage": "You are a helpful study assistant that will help students", "query": "text for the notes we submit"}'
+
+
 */
 
 app.use("/gpt", gptRouter);
