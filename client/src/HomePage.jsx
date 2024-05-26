@@ -73,7 +73,7 @@ export default function HomePage() {
     try {
       // Make POST request to login endpoint
       const response = await axios.post("http://localhost:3001/addNote", {
-        noteName: Note_Name,
+        _id: Note_Name,
         noteContent: Note_Content,
         noteFeedback: [],
         lectureId: LecID,
