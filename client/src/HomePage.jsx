@@ -2,16 +2,26 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./HomePage.css";
 import axios from "axios";
-import Page2 from './Page2';
-import { useNavigate } from 'react-router-dom';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Page2 from "./Page2";
+import { useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function textBox() {
-  return (
-    <div>
-      <input> Enter Text Here</input>
-    </div>
+function extractFeedbackArray(response) {
+  // Extract the response text
+  const responseText = response.response;
+
+  // Use regex to find the array-like structure part between /**@**/ markers
+  const feedbackArrayMatch = responseText.match(
+    /\/\*\*@\*\*\/\s*\[(.*?)\]\s*\/\*\*@\*\*\//s
   );
+
+  if (feedbackArrayMatch) {
+    const feedbackArrayString = `[${feedbackArrayMatch[1]}]`;
+
+    return JSON.parse(feedbackArrayString);
+  } else {
+    return responseText;
+  }
 }
 
 function AllNotesButton() {
@@ -20,7 +30,6 @@ function AllNotesButton() {
   const handleAllNotesClick = () => {
     console.log("button has been pressed");
     navigate(`/page2/`);
-
   };
 
   return (
@@ -79,57 +88,69 @@ export default function HomePage() {
   const [Lecture_Content, setLectureContent] = useState("");
 
   const handleAddNote = async (e) => {
-    const LecID = Lecture_ID.toString();
-    console.log(LecID);
-
     e.preventDefault();
+    const LecID = Lecture_ID.toString();
+    console.log("Lecture ID:", LecID);
+
     try {
-      // Make POST request to login endpoint
-      const response = await axios.post("http://localhost:3001/addNote", {
-        noteName: Note_Name,
-        noteContent: Note_Content,
-        noteFeedback: [],
-        lectureId: LecID,
-      });
+      // Make POST request to add note
+      const addNoteResponse = await axios.post(
+        "http://localhost:3001/addNote",
+        {
+          noteName: Note_Name,
+          noteContent: Note_Content,
+          noteFeedback: [],
+          lectureId: LecID,
+        }
+      );
 
+      if (addNoteResponse.data && addNoteResponse.data.noteId) {
+        const noteId = addNoteResponse.data.noteId;
+        setNoteID(noteId);
 
-      if (response.data && response.data.noteId) {
-        setNoteID(response.data.noteId);
-        
         try {
-          const response = await axios.get(
+          // Fetch lecture content
+          const lectureResponse = await axios.get(
             `http://localhost:3001/lecture/${LecID}`
           );
-          setLectureContent(response.data);
-        } catch (error) {
-          console.error("Failed to get lecture:", error);
-          return (error);
+          setLectureContent(lectureResponse.data);
+
+          try {
+            // Ensure the state is updated before making the GPT query
+            const gptResponse = await axios.post(
+              "http://localhost:3001/gpt/query",
+              {
+                transcript: lectureResponse.data,
+                notes: Note_Content,
+              }
+            );
+            const feedbackArray = extractFeedbackArray(gptResponse.data);
+            console.log("Feedback Array:", feedbackArray);
+
+            // Put request to update note with feedback
+            const updateResponse = await axios.put(
+              `http://localhost:3001/note/${noteId}`,
+              {
+                noteFeedback: feedbackArray,
+              }
+            );
+
+            console.log("Update Response:", updateResponse.data);
+            alert(
+              "Your notes have been saved! View what you missed in All ReCaps."
+            );
+          } catch (gptError) {
+            console.error("Failed to generate response:", gptError);
+            alert("Try Again! Make sure all fields are complete.");
+          }
+        } catch (lectureError) {
+          console.error("Failed to get lecture:", lectureError);
         }
-
-        try {
-          const response = await axios.post("http://localhost:3001/gpt/query", {
-            transcript: Lecture_Content,
-            notes: Note_Content,
-          });
-          console.log("this is the response from the model");
-          console.table(response.data);
-          alert("Your notes have been saved! View what you missed in All ReCaps.");
-          
-
-
-        } catch (error) {
-          console.error("Failed to generate response:", error);
-          alert("Try Again! Make sure all fields are complete.")
-          return (error);
-        }
-        // Handle success, e.g., redirect to dashboard
       } else {
-        // Handle error, e.g., display error message
-        console.error("Failed to add note:", response.data);
+        console.error("Failed to add note:", addNoteResponse.data);
       }
-    } catch (error) {
-      // Handle error, e.g., display error message
-      console.error(error);
+    } catch (addNoteError) {
+      console.error(addNoteError);
     }
   };
 
@@ -158,26 +179,24 @@ export default function HomePage() {
           </select>
         </div>
         <li className="note-title">
+          <label>Give Your Notes A Title: </label>
+          <input
+            value={Note_Name}
+            placeholder="Insert Title"
+            onChange={(e) => setNoteName(e.target.value)}
+          ></input>
+        </li>
 
-            <label>Give Your Notes A Title: </label>
-            <input
-              value={Note_Name}
-              placeholder="Insert Title"
-              onChange={(e) => setNoteName(e.target.value)}
-            ></input>
-          </li>
-        
-          
-          <li>
-            <p className="notes-input"></p>
-            <textarea
-              rows="20"
-              value={Note_Content}
-              id="dynamic-input"
-              placeholder="Insert Notes"
-              onChange={(e) => setNoteContent(e.target.value)}
-            ></textarea>
-          </li>
+        <li>
+          <p className="notes-input"></p>
+          <textarea
+            rows="20"
+            value={Note_Content}
+            id="dynamic-input"
+            placeholder="Insert Notes"
+            onChange={(e) => setNoteContent(e.target.value)}
+          ></textarea>
+        </li>
         <div className="buttons-container">
           <AllNotesButton />
           <SubmitButton />

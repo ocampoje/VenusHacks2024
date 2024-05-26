@@ -10,7 +10,7 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    feedback: [String],
+    feedback: { type: [String], default: [] },
     lecture_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Lecture",

@@ -199,16 +199,22 @@ app.delete("/deleteLectureByName/:name", async (req, res) => {
 // curl -X PUT "http://localhost:3001/note/{noteId}" -H "Content-Type: application/json" -d "{\"noteName\":\"new name\",\"noteContent\":\"new content\",\"noteFeedback\":\"new feedback\"}"
 app.put("/note/:noteId", async (req, res) => {
   const { noteId } = req.params;
-
+  console.log("feedback", req.body.noteFeedback);
   try {
     const note = await NoteModel.findById(noteId);
     if (!note) {
       return res.status(404).send("Note not found");
     }
-    if (req.body.noteName) note.name = req.body.noteName;
-    if (req.body.noteContent) note.content = req.body.noteContent;
-    if (req.body.noteFeedback) note.feedback = req.body.noteFeedback;
+    if (req.body.noteName !== undefined) note.name = req.body.noteName;
+    if (req.body.noteContent !== undefined) note.content = req.body.noteContent;
+    if (req.body.noteFeedback !== undefined) {
+      console.log("Updating feedback:", req.body.noteFeedback);
+      note.feedback = req.body.noteFeedback;
+    }else{
+      console.log("No feedback provided");
+    }
 
+    console.log("Updated note:", note);
     await note.save();
     res.send(note);
   } catch (error) {
@@ -216,7 +222,6 @@ app.put("/note/:noteId", async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
-
 
 // curl http://localhost:3001/note/{noteId}
 app.get("/note/:id", async (req, res) => {
