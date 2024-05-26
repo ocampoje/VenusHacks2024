@@ -5,7 +5,7 @@ h1{
     font-style: normal;
 }
 
-.homepage-container {
+.p2-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -14,10 +14,44 @@ h1{
     color: #ba55d3;
     padding: 20px;
   }
-
-  ul {
-    color: #ba55d3;
-    list-style-type: none;
-    padding: 0;
+  .righteous-regular {
+    text-align: center;
+    font-family: "Righteous", 'Times New Roman', Times, serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #8b6cc9; /* Set text color to white */
+    font-size: 36px; /* Increase font size */
   }
 
+ul {
+  color: #ba55d3;
+  list-style-type: none;
+  padding: 0;
+  display: flex; /* Display list items horizontally */
+  flex-wrap: wrap; /* Allow items to wrap to the next row */
+  justify-content: center; /* Center items horizontally */
+}
+
+.lecture-button-container {
+  text-align: center;
+  margin-top: 20px;
+  flex: 1; /* Grow to fill available space */
+}
+
+.lecture-button {
+  padding: 30px; /* Increase padding for larger size */
+  width: 250px; /* Set fixed width for square shape */
+  height: 300px; /* Set fixed height for square shape */
+  font-size: 28px; /* Increase font size for better visibility */
+  margin: 0 20px 20px; /* Add margin between buttons and at the bottom */
+  background-color: rgba(146, 144, 195, 0.6); /* Change background color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.lecture-button:hover {
+  background-color: #9b2aaf;
+}

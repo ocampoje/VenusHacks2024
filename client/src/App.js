@@ -16,11 +16,14 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/Page2" element={<Page2 />} />
         <Route path="/Testing" element={<Testing />} />
-        <Route path="/Page3" element={<Page3 />} />
+        {/* <Route path="/Page3" element={<Page3 />} /> */}
+        <Route path="/page3/:lectureName" element={<Page3 />} />
       </Routes>
     </Router>
+    
   );
+  
 }
 
-export default App;
 
+export default App;
