@@ -1,57 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Page2.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Page2.css";
 
-function LectureButton({ lecture }) {
+function NoteButton({ note }) {
   const navigate = useNavigate();
-  console.log(lecture);
 
-  const handleLectureClick = () => {
-    navigate(`/page3/${lecture.name}`, { state: { noteID: lecture._id } });
+  const handleNoteClick = () => {
+    console.log(note._id)
+    navigate(`/page3/${note.name}`, { state: { noteID: note._id } });
   };
 
   return (
     <div className="lecture-button-container">
-      <button onClick={handleLectureClick} className="lecture-button">
-        {lecture.name}
+      <button onClick={handleNoteClick} className="lecture-button">
+        {note.name}
       </button>
     </div>
   );
 }
 
-
 export default function Page2() {
-  const [lectures, setLectures] = useState([]);
+  const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    fetchLectures();
+    fetchNotes();
   }, []);
 
-  const fetchLectures = async () => {
+  const fetchNotes = async () => {
     try {
-      const response = await fetch('http://localhost:3001/notes');
+      const response = await fetch("http://localhost:3001/notes");
       if (!response.ok) {
-        throw new Error('Failed to fetch lectures');
+        throw new Error("Failed to fetch notes");
       }
       const data = await response.json();
-      const lectureData = data.map(note => ({
-        _id: note._id,
-        name: note.NoteName
+      const noteData = data.map((note) => ({
+        _id: note.NoteId,
+        name: note.NoteName,
       }));
-      setLectures(lectureData);
+      setNotes(noteData);
     } catch (error) {
-      console.error('Error fetching lectures:', error);
+      console.error("Error fetching notes:", error);
     }
   };
 
   return (
     <div className="p2-container">
       <h1 className="righteous-regular">Recent ReCaps</h1>
-      <ul style={{ color: '#ba55d3', listStyleType: 'none', padding: 0 }}>
-        {lectures.map(lecture => (
-
-          <li key={lecture._id}>
-            <LectureButton lecture={lecture} />
+      <ul style={{ color: "#ba55d3", listStyleType: "none", padding: 0 }}>
+        {notes.map((note) => (
+          <li key={note._id}>
+            <NoteButton note={note} />
           </li>
         ))}
       </ul>

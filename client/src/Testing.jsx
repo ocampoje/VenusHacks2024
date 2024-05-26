@@ -4,11 +4,21 @@ import React from "react";
 import axios from "axios"; // Import axios for making HTTP requests
 import { useState } from "react";
 
-// function Login() {
-//   const navigate = useNavigate();
-//   const goToLoginPage = () => {
-//     navigate("/");
-//   };
+function extractFeedbackArray(response) {
+  const responseText = response.response;
+
+  const feedbackArrayMatch = responseText.match(
+    /\/\*\*@\*\*\/\[(.*?)\]\/\*\*@\*\*\//
+  );
+
+  if (feedbackArrayMatch) {
+    const feedbackArrayString = `[${feedbackArrayMatch[1]}]`;
+
+    return JSON.parse(feedbackArrayString);
+  } else {
+    return responseText;
+  }
+}
 
 function Testing() {
   const [Note_Name, setNoteName] = useState("");
@@ -25,13 +35,6 @@ function Testing() {
 
   const [response, setResponse] = useState("");
 
-  const cleanResponse = (response) => {
-    // Remove triple quotes and escape characters
-    let clean = response.replace(/\\\"\\\"\\\"|\\n/g, "\n").trim();
-    // Further replace operations can be added here if needed
-    return clean;
-  };
-
   const handleGPT = async (e) => {
     e.preventDefault();
     try {
@@ -40,8 +43,8 @@ function Testing() {
         transcript: transcript,
         notes: notes,
       });
-      console.log(response.data);
-      setResponse(cleanResponse(JSON.stringify(response.data, null, 2)));
+      const feedbackArray = extractFeedbackArray(response.data);
+      setResponse(feedbackArray);
       // Handle success, e.g., redirect to dashboard
     } catch (error) {
       // Handle error, e.g., display error message

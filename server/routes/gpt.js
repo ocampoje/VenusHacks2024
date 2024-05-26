@@ -29,7 +29,9 @@ router.post("/query", async function (req, res, next) {
   
   Step 3 - Output this result to the user as an array in the provided format. Each feedback should be a distinct topic and provide where in the LECTURE_TRANSCRIPT the information was obtained. For example, if the feedback is about a missing concept, provide the sentence(s) in the LECTURE_TRANSCRIPT where the concept was discussed. 
   Another example is if there is wrong information provide the sentence(s) in the LECTURE_TRANSCRIPT where the concept was discussed and provide the correct information.
-  ["feedback1 text", "feedback2 text", "feedback3 text",...]// include citation. If there is no feedback, provide an empty array.
+
+  Example format:
+  /**@**/["feedback1 text", "feedback2 text", "feedback3 text",...]/**@**/  -include citation. If there is no feedback, provide an empty array. make sure to have /**@**/ before and after array to make parsing easier.
 
   `;
 
@@ -41,7 +43,7 @@ router.post("/query", async function (req, res, next) {
         { role: "system", content: systemMessage }, // sys msg gives instructions on how the model behaves
         { role: "user", content: userQuery }, // like typing into the gui of chatgpt
       ],
-      max_tokens: 2000,
+      max_tokens: 4000,
       temperature: 0,
     });
 

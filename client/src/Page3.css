@@ -1,15 +1,35 @@
+/* Hide scrollbar for Chrome, Safari, and Opera */
+
+.note-feedbacks::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+.note-feedbacks {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .page3-container {
   text-align: center;
   font-family: "Righteous", 'Times New Roman', Times, serif;
   font-weight: 1000;
   font-size: 50px;
   font-style: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center the content vertically */
+  min-height: 100vh;
+  background-image: linear-gradient(180deg, #070F2B, #183391);
+  color: #f9f9f9;
+  padding: 20px;
 }
 
 .page3-subheading {
   font-size: 20px;
   color: white;
 }
+
 .recap-text {
   text-align: left;
   font-size: 25px; /* Adjust the font size as needed */
@@ -34,39 +54,41 @@
   background-color: #f9f9f9;
 }
 
-.page3-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center the content horizontally */
-  justify-content: center; /* Center the content vertically */
-  min-height: 100vh;
-  background-image: linear-gradient(180deg, #070F2B, #183391);
-  color: #ba55d3;
-  padding: 20px;
-}
-
 .notes-box {
   border-radius: 25px;
   background-color: rgba(146, 144, 195, 0.6);
-  padding: 150px 500px;
-  margin-bottom: 1px;
+  padding: 20px; /* Reduced padding to fit better within the container */
+  margin-bottom: 20px;
+  color: white; /* Set the text color to white */
+  text-align: left; /* Left align the text */
+  font-size: 16px; /* Set the font size to small */
+  max-height: 300px; /* Set a maximum height for the box */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .note-feedbacks {
   list-style-type: none;
   border-radius: 25px;
   background-color: rgba(146, 144, 195, 0.6);
-  padding: 50px 500px;
+  padding: 20px;
   margin-bottom: 40px;
+  color: white; /* Set the text color to white */
+  text-align: left; /* Left align the text */
+  font-size: 14px; /* Set the font size to small */
+  max-height: 200px; /* Set a maximum height for the feedback list */
+  overflow-y: auto; /* Enable vertical scrolling */
+  display: flex; /* Use flexbox layout */
+  flex-direction: row; /* Stack items vertically */
+  align-items: flex-start; /* Align items to the left */
 }
-
 
 .note-feedbacks li {
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #f4f4f4;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  width: 100%; /* Ensure the list item takes full width */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
 .note-feedbacks li:last-child {
@@ -75,6 +97,10 @@
 
 .note-feedbacks li p {
   margin: 0;
-  font-size: 16px;
-  color: #555;
+  text-align: left;
+  font-size: 14px; /* Set the font size to small */
+  color: white; /* Set the text color to white */
+  width: 100%; /* Ensure the paragraph takes full width */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
+
