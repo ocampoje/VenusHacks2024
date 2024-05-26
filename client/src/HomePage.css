@@ -1,10 +1,16 @@
 h1{
     text-align: center;
     font-family: "Righteous", 'Times New Roman', Times, serif;
-    font-weight: 400;
-    font-style: normal;
+    font-weight: 1000;
+    font-style: "normal";
 }
 
+.subheading {
+    text-align: center; /* Align the subheading in the center */
+    font-size: 20px; /* Adjust the font size as needed */
+    margin-top: 5px; /* Add some space between the title and the subheading */
+    color: white;
+  }
 
 .homepage-container {
     display: flex;
@@ -22,17 +28,41 @@ h1{
     padding: 0;
   }
 
+  
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Adjust margin as needed */
+  }
+
   .compare-notes-button {
     font-size: 18px; /* Adjust the font size as needed */
-    padding: 17px 50px; /* Adjust the padding to make the button more elongated */
+    padding: 17px 120px; /* Adjust the padding to make the button more elongated */
     border: none; /* Remove default button border */
     border-radius: 25px; /* Apply border radius to make it rounded */
-    background-color: rgba(145, 111, 177, 0.5); /* Light purple with transparency */
-    color: white; /* Text color */
+    background-color: rgba(146, 144, 195, 0.6); /* Light purple with transparency */
+    color: 070F2B; /* Text color */
+    font-family: 'Circular Std', sans-serif;
   }
   
   .submit-button-container {
+    align-self: flex-start;
+    margin-left: 20px;
+  }
+  
+  
+  .all-notes-button {
+    font-size: 18px; /* Adjust the font size as needed */
+    padding: 17px 120px; /* Adjust the padding to make the button more elongated */
+    border: none; /* Remove default button border */
+    border-radius: 25px; /* Apply border radius to make it rounded */
+    background-color: rgba(146, 144, 195, 0.6); /* Light purple with transparency */
+    color: 070F2B; /* Text color */
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .all-notes-button-container {
     align-self: flex-end;
     margin-right: 20px;
   }
-  

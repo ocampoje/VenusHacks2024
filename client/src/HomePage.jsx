@@ -18,7 +18,20 @@ function SubmitButton(){
   return (
     <div className="submit-button-container">
       <button onClick={SubmitQuery} className="compare-notes-button">
-        Compare Notes
+        Submit ReCap
+      </button>
+    </div>
+  )
+}
+
+function AllNotesButton(){
+  const handleAllNotesClick = () => {
+  };
+  
+  return (
+    <div className="all-notes-button-container">
+      <button onClick={handleAllNotesClick} className="all-notes-button">
+        View All ReCaps
       </button>
     </div>
   )
@@ -28,16 +41,17 @@ export default function HomePage() {
   return (
     <div className="homepage-container">
       <h1 className="righteous-regular">ReCap</h1>
+      <p className="subheading">Take note of what you missed.</p>
       <ul style={{ color: '#ba55d3', listStyleType: 'none', padding: 0 }}>
-        <l1 style={{ color: 'white' }}>Take note of what you missed.</l1>
         {/* add the buttons here */}
         <li style={{ color: 'white' }}>Type your notes here:</li>
         
       </ul>
       
       <p >Enter Text Here</p>
-      <SubmitButton />
-      {/* <div className="anteater"></div> */}
+      <div className="buttons-container">
+      <AllNotesButton />
+      <SubmitButton /></div>
     </div>
   );
 }

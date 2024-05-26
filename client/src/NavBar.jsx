@@ -7,6 +7,7 @@ function NavBar() {
       <Link to="/">Home</Link> |
       <Link to="/Page2">Page 2</Link> |
       <Link to="/Testing">Testing</Link> |
+      <Link to="/Page3">Page 3</Link>  |
     </nav>
   );
 }
