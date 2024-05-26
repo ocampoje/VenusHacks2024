@@ -78,7 +78,9 @@ export default function HomePage() {
         noteFeedback: [],
         lectureId: LecID,
       });
-      console.log(response.data);
+      if (response.data && response.data.noteId) {
+        setNoteID(response.data.noteId); 
+      }
       // Handle success, e.g., redirect to dashboard
     } catch (error) {
       // Handle error, e.g., display error message
@@ -87,14 +89,6 @@ export default function HomePage() {
   };
 
   {
-    const handleNoteNameChange = (e) => {
-      setNoteName(e.target.value);
-    };
-
-    const handleNoteContentChange = (e) => {
-      setNoteContent(e.target.value);
-    };
-
     return (
       <div className="homepage-container">
         <div className="title-container">

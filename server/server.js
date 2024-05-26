@@ -80,10 +80,11 @@ app.get("/notes", async (req, res) => {
       select: "name transcript",
     });
     const formattedNotes = notes.map((note) => ({
+      NoteId: note._id,
       NoteName: note.name,
       NoteContent: note.content,
       NoteFeedback: note.feedback,
-      LectureId: note.lecture_id
+      LectureId: note.lecture_id,
       // Lecture: note.lecture_id
       //   ? { name: note.lecture_id.name, transcript: note.lecture_id.transcript }
       //   : { name: "N/A", transcript: "N/A" },
@@ -152,7 +153,11 @@ app.post("/addNote", async (req, res) => {
 
   try {
     await newNote.save();
-    res.status(201).json({ message: "Note added successfully", note: newNote });
+    res.status(201).json({
+      message: "Note added successfully",
+      noteId: newNote._id, // This is the ObjectId of the newly created note
+      note: newNote,
+    });
   } catch (error) {
     console.error("Error adding note:", error);
     res.status(500).json({ message: "Failed to add note due to server error" });
