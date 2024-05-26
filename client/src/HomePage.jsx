@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./HomePage.css";
 import axios from "axios";
+import Page2 from './Page2';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function textBox() {
   return (
@@ -12,7 +14,11 @@ function textBox() {
 }
 
 function AllNotesButton() {
-  const handleAllNotesClick = () => {};
+  const handleAllNotesClick = () => {
+    console.log("button has been pressed");
+    <Route path="/Page2" element={<Page2 />} />
+
+  };
 
   return (
     <div className="all-notes-button-container">
